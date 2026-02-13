@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For My Forever Valentine ❤️</title>
-    <!-- Romantic Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -21,11 +20,10 @@
             font-family: 'Montserrat', sans-serif;
             background: linear-gradient(135deg, #fdfbfb 0%, #ffe3e3 100%);
             color: var(--text);
-            overflow: hidden; /* Locked until enter */
+            overflow: hidden;
             height: 100vh;
         }
 
-        /* --- 1. LUXURY PRE-LOADER --- */
         #loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--cream); z-index: 99999;
@@ -42,15 +40,11 @@
         .heart-loader:before { left: 40px; transform: rotate(-45deg); transform-origin: 0 100%; }
         .heart-loader:after { left: 0; transform: rotate(45deg); transform-origin: 100% 100%; }
         
-        .loading-msg {
-            margin-top: 30px; font-family: 'Parisienne', cursive; font-size: 1.5rem;
-            color: var(--deep-rose);
-        }
+        .loading-msg { margin-top: 30px; font-family: 'Parisienne', cursive; font-size: 1.5rem; color: var(--deep-rose); }
 
-        /* --- 2. LOCK SCREEN --- */
         #lockscreen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/bg.jpg');
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('bg.jpg');
             background-size: cover; background-position: center;
             z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center;
             color: white; transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
@@ -59,21 +53,16 @@
         #lockscreen.unlocked { transform: translateY(-100%); }
         
         .timer-box { display: flex; gap: 10px; margin: 25px 0; }
-        .unit { 
-            background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); 
-            padding: 12px; border-radius: 12px; min-width: 65px; 
-        }
+        .unit { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 12px; border-radius: 12px; min-width: 65px; }
         .unit span { font-size: 1.8rem; font-family: 'Cormorant Garamond', serif; display: block; font-weight: bold; }
 
         .btn-enter {
             padding: 16px 45px; background: white; color: var(--deep-rose);
             border: none; border-radius: 50px; font-size: 1.1rem; font-weight: bold;
             cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            text-transform: uppercase; letter-spacing: 2px; transition: 0.3s;
+            text-transform: uppercase; letter-spacing: 2px;
         }
-        .btn-enter:active { transform: scale(0.95); }
 
-        /* --- 3. MAIN SITE --- */
         #main-site { height: 100vh; overflow-y: auto; display: none; }
         .container { max-width: 600px; margin: 0 auto; padding: 40px 15px 100px 15px; }
 
@@ -83,10 +72,8 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.05);
         }
 
-        h1 { font-family: 'Parisienne', cursive; font-size: 3.5rem; color: var(--deep-rose); margin-bottom: 10px; }
-        h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-style: italic; margin-bottom: 20px; color: var(--text); }
+        h1 { font-family: 'Parisienne', cursive; font-size: 3.5rem; color: var(--deep-rose); }
 
-        /* --- 4. THE 8-PHOTO GALLERY (Fixed Smooth Scroll) --- */
         .gallery-wrapper {
             width: 100vw; margin-left: calc(-50vw + 50%);
             overflow-x: auto; display: flex; gap: 20px; padding: 20px 30px 50px 30px;
@@ -97,13 +84,11 @@
         .polaroid {
             flex: 0 0 260px; background: white; padding: 12px 12px 45px 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 2px;
-            transform: rotate(-2deg); transition: 0.3s;
+            transform: rotate(-2deg);
         }
-        .polaroid:nth-child(even) { transform: rotate(3deg); }
         .polaroid img { width: 100%; height: 280px; object-fit: cover; background: #eee; }
-        .polaroid span { display: block; margin-top: 15px; font-family: 'Parisienne', cursive; font-size: 1.5rem; color: #444; }
+        .polaroid span { display: block; margin-top: 15px; font-family: 'Parisienne', cursive; font-size: 1.5rem; }
 
-        /* --- 5. THE RUNAWAY GAME --- */
         .game-box {
             position: relative; height: 350px; width: 100%;
             background: white; border: 2px dashed var(--rose-gold);
@@ -111,6 +96,144 @@
         }
         .btn-game {
             padding: 15px 40px; border-radius: 50px; border: none;
+            font-family: 'Montserrat', sans-serif; font-weight: 700; cursor: pointer;
+            position: absolute; transition: 0.1s ease-out; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .btn-yes { background: var(--deep-rose); color: white; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 10; }
+        .btn-no { background: white; color: var(--deep-rose); border: 1px solid var(--deep-rose); left: 50%; top: 20%; transform: translateX(-50%); }
+
+        #success-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.96); z-index: 20000;
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 20px;
+        }
+        @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" preload="auto" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792cb.mp3" type="audio/mp3">
+    </audio>
+
+    <div id="loader">
+        <div class="heart-loader"></div>
+        <div class="loading-msg">Loading a lovely surprise...</div>
+    </div>
+
+    <div id="lockscreen">
+        <h1 style="color: white; font-size: 2.5rem;">For You ❤️</h1>
+        <div class="timer-box">
+            <div class="unit"><span id="hrs">00</span>Hrs</div>
+            <div class="unit"><span id="min">00</span>Min</div>
+            <div class="unit"><span id="sec">00</span>Sec</div>
+        </div>
+        <button class="btn-enter" onclick="unlock()">Tap to Enter ❤️</button>
+    </div>
+
+    <div id="main-site">
+        <div class="container">
+            <section>
+                <h1>Hi Beautiful,</h1>
+                <p>Since you are my favorite person, I made this special corner of the internet just for you.</p>
+            </section>
+
+            <div class="gallery-wrapper">
+                <div class="polaroid"><img src="1.jpg"><span>The Beginning</span></div>
+                <div class="polaroid"><img src="2.jpg"><span>First Date</span></div>
+                <div class="polaroid"><img src="3.jpg"><span>Your Smile</span></div>
+                <div class="polaroid"><img src="4.jpg"><span>Us</span></div>
+                <div class="polaroid"><img src="5.jpg"><span>Adventures</span></div>
+                <div class="polaroid"><img src="6.jpg"><span>Laughs</span></div>
+                <div class="polaroid"><img src="7.jpg"><span>Happiness</span></div>
+                <div class="polaroid"><img src="7.jpg"><span>Forever</span></div> <!-- Used 7 again since 8 is missing -->
+            </div>
+
+            <section>
+                <h2>One Big Question...</h2>
+                <div class="game-box" id="gameArea">
+                    <button class="btn-game btn-yes" onclick="celebrate()">YES! ❤️</button>
+                    <button class="btn-game btn-no" id="noBtn">No</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div id="success-overlay">
+        <canvas id="confetti"></canvas>
+        <h1>YAY! 🎉</h1>
+        <h2>I'm the luckiest! ❤️</h2>
+        <button style="margin-top:20px; padding:10px 20px; border-radius:20px; border:none; background:var(--deep-rose); color:white;" onclick="document.getElementById('success-overlay').style.display='none'">Back</button>
+    </div>
+
+    <script>
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 600);
+            }, 2000);
+        });
+
+        const target = new Date("February 14, 2026 00:00:00").getTime();
+        function updateTimer() {
+            const now = new Date().getTime();
+            const diff = target - now;
+            if (diff > 0) {
+                document.getElementById('hrs').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('min').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('sec').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+            }
+        }
+        setInterval(updateTimer, 1000);
+
+        function unlock() {
+            document.getElementById('bgMusic').play();
+            document.getElementById('lockscreen').classList.add('unlocked');
+            setTimeout(() => {
+                document.getElementById('main-site').style.display = 'block';
+                document.body.style.overflowY = 'auto';
+            }, 800);
+        }
+
+        const noBtn = document.getElementById('noBtn');
+        const gameArea = document.getElementById('gameArea');
+        function moveBtn(e) {
+            if(e) e.preventDefault();
+            const box = gameArea.getBoundingClientRect();
+            const btn = noBtn.getBoundingClientRect();
+            noBtn.style.left = Math.random() * (box.width - btn.width - 20) + 'px';
+            noBtn.style.top = Math.random() * (box.height - btn.height - 20) + 'px';
+        }
+        noBtn.addEventListener('mouseover', moveBtn);
+        noBtn.addEventListener('touchstart', moveBtn);
+
+        function celebrate() {
+            document.getElementById('success-overlay').style.display = 'flex';
+            const canvas = document.getElementById('confetti');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const pieces = [];
+            for(let i=0; i<100; i++) {
+                pieces.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, s:Math.random()*5+5, c:`hsl(${Math.random()*360},100%,70%)`, v:Math.random()*2+2});
+            }
+            function anim() {
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                pieces.forEach(p => {
+                    p.y += p.v;
+                    ctx.fillStyle = p.color || p.c;
+                    ctx.fillRect(p.x, p.y, p.s, p.s);
+                    if(p.y > canvas.height) p.y = -10;
+                });
+                requestAnimationFrame(anim);
+            }
+            anim();
+        }
+    </script>
+</body>
+</html>            padding: 15px 40px; border-radius: 50px; border: none;
             font-family: 'Montserrat', sans-serif; font-weight: 700; cursor: pointer;
             position: absolute; transition: 0.1s ease-out; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
