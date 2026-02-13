@@ -32,7 +32,7 @@
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--cream); z-index: 99999;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            transition: opacity 0.8s ease;
+            transition: opacity 1s ease;
         }
         .heart-loader {
             width: 60px; height: 60px; position: relative;
@@ -64,7 +64,7 @@
         #lockscreen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             /* Tries bg.jpg, falls back to gradient if missing */
-            background: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('bg.jpg'), var(--deep-rose);
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('bg.jpg'), var(--deep-rose);
             background-size: cover; background-position: center;
             z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center;
             color: white; transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
@@ -97,7 +97,7 @@
         }
 
         h1 { font-family: 'Parisienne', cursive; font-size: 3.5rem; color: var(--deep-rose); margin-bottom: 10px; }
-        h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-style: italic; margin-bottom: 20px; }
+        h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-style: italic; margin-bottom: 20px; color: var(--text); }
         p { font-size: 1.1rem; line-height: 1.6; }
 
         /* --- 5. FILM STRIP GALLERY --- */
@@ -199,15 +199,48 @@
             <!-- GALLERY -->
             <h2 style="text-align: center; margin-bottom: 0;">Our Journey</h2>
             <div class="gallery-wrapper">
-                <!-- Using onerror to handle missing images safely -->
-                <div class="polaroid"><img src="1.jpg" onerror="this.src='https://placehold.co/260x280/ffc0cb/5e2c3a?text=❤️'"><span>The First Day</span></div>
-                <div class="polaroid"><img src="2.jpg" onerror="this.src='https://placehold.co/260x280/ffc0cb/5e2c3a?text=❤️'"><span>First Laugh</span></div>
-                <div class="polaroid"><img src="3.jpg" onerror="this.src='https://placehold.co/260x280/ffc0cb/5e2c3a?text=❤️'"><span>Favorite Date</span></div>
-                <div class="polaroid"><img src="4.jpg" onerror="this.src='https://placehold.co/260x280/ffc0cb/5e2c3a?text=❤️'"><span>Summer</span></div>
-                <div class="polaroid"><img src="5.jpg" onerror="this.src='https://placehold.co/260x280/ffc0cb/5e2c3a?text=❤️'"><span>Adventures</span></div>
-                <div class="polaroid"><img src="6.jpg" onerror="this.src='https://placehold.co/260x280/ffc0cb/5e2c3a?text=❤️'"><span>Cozy Nights</span></div>
-                <div class="polaroid"><img src="7.jpg" onerror="this.src='https://placehold.co/260x280/ffc0cb/5e2c3a?text=❤️'"><span>Smiles</span></div>
-                <div class="polaroid"><img src="8.jpg" onerror="this.src='https://placehold.co/260x280/ffc0cb/5e2c3a?text=❤️'"><span>Forever</span></div>
+                
+                <!-- PHOTO 1: Added Error Handler in case 1.jpg vs 1.JPG issue -->
+                <div class="polaroid">
+                    <img src="1.jpg" onerror="this.src='https://placehold.co/260x280/ffc0cb/5e2c3a?text=❤️'">
+                    <span>The Beginning</span>
+                </div>
+                
+                <div class="polaroid">
+                    <img src="2.jpg" onerror="this.src='https://placehold.co/260x280/ffc0cb/5e2c3a?text=❤️'">
+                    <span>Your smile</span>
+                </div>
+                
+                <div class="polaroid">
+                    <img src="3.jpg" onerror="this.src='https://placehold.co/260x280/ffc0cb/5e2c3a?text=❤️'">
+                    <span>Favorite Date</span>
+                </div>
+                
+                <div class="polaroid">
+                    <img src="4.jpg" onerror="this.src='https://placehold.co/260x280/ffc0cb/5e2c3a?text=❤️'">
+                    <span>Early meetings</span>
+                </div>
+                
+                <div class="polaroid">
+                    <img src="5.jpg" onerror="this.src='https://placehold.co/260x280/ffc0cb/5e2c3a?text=❤️'">
+                    <span>Adventures and Love</span>
+                </div>
+                
+                <div class="polaroid">
+                    <img src="6.jpg" onerror="this.src='https://placehold.co/260x280/ffc0cb/5e2c3a?text=❤️'">
+                    <span>Felt Safe with you</span>
+                </div>
+                
+                <div class="polaroid">
+                    <img src="7.jpg" onerror="this.src='https://placehold.co/260x280/ffc0cb/5e2c3a?text=❤️'">
+                    <span>Thank you</span>
+                </div>
+                
+                <div class="polaroid">
+                    <img src="8.jpg" onerror="this.src='https://placehold.co/260x280/ffc0cb/5e2c3a?text=❤️'">
+                    <span>Forever yours</span>
+                </div>
+
             </div>
 
             <!-- REASONS -->
@@ -223,7 +256,7 @@
 
             <!-- GAME -->
             <section>
-                <h2>The Big Question</h2>
+                <h2 style="color: #d45d79; font-weight: 700;">Will You Be My Valentine?</h2>
                 <div class="game-box" id="gameArea">
                     <button class="btn-game btn-yes" onclick="celebrate()">YES! ❤️</button>
                     <button class="btn-game btn-no" id="noBtn">No</button>
@@ -256,7 +289,7 @@
     </div>
 
     <script>
-        // 1. SAFETY LOADER: Force hide after 2.5s even if images fail
+        // 1. SAFETY LOADER: Force hide after 3s even if images fail
         window.onload = () => {
             setTimeout(() => {
                 const loader = document.getElementById('loader');
@@ -264,7 +297,7 @@
                     loader.style.opacity = '0';
                     setTimeout(() => loader.style.display = 'none', 800);
                 }
-            }, 2500);
+            }, 3000);
         };
 
         // 2. UNLOCK & AUDIO SAFEGUARD
@@ -276,6 +309,9 @@
             document.getElementById('lockscreen').classList.add('unlocked');
             document.getElementById('main-site').style.display = 'block';
             document.body.style.overflowY = 'auto'; // Allow scrolling
+            
+            // Auto scroll to top
+            window.scrollTo({top: 0, behavior: 'smooth'});
         }
 
         // 3. BACKGROUND HEARTS
@@ -336,7 +372,7 @@
             canvas.height = window.innerHeight;
             const pieces = [];
             for(let i=0; i<100; i++) {
-                pieces.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height, s:Math.random()*8+4, c:`hsl(${Math.random()*360},100%,70%)`, v:Math.random()*3+2});
+                pieces.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height - canvas.height, s:Math.random()*8+4, c:`hsl(${Math.random()*360},100%,70%)`, v:Math.random()*3+2});
             }
             function anim() {
                 ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -352,4 +388,4 @@
         }
     </script>
 </body>
-                                                                                                                                                       </html>
+    </html>
