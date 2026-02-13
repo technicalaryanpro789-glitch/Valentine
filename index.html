@@ -2,142 +2,351 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>My Forever Valentine ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Premium Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
     <style>
-        :root { --rose: #ff4d6d; --cream: #fff0f3; --text: #5e2c3a; }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: 'Montserrat', sans-serif; background: var(--cream); color: var(--text); overflow-x: hidden; }
+        :root {
+            --rose-gold: #e5b3a3;
+            --deep-rose: #d45d79;
+            --cream: #fffaf0;
+            --glass: rgba(255, 255, 255, 0.85);
+            --text: #5e2c3a;
+        }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #ffd1ff, #fbc2eb);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: var(--text);
+            overflow: hidden; /* Locked until enter */
+            height: 100vh;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- 1. LUXURY PRE-LOADER --- */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--cream); z-index: 99999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: opacity 0.8s ease;
+        }
+        .heart-loader {
+            width: 80px; height: 70px; position: relative;
+            animation: beat 1.2s infinite;
+        }
+        .heart-loader:before, .heart-loader:after {
+            content: ""; position: absolute; top: 0; width: 40px; height: 65px;
+            border-radius: 40px 40px 0 0; background: var(--deep-rose);
+        }
+        .heart-loader:before { left: 40px; transform: rotate(-45deg); transform-origin: 0 100%; }
+        .heart-loader:after { left: 0; transform: rotate(45deg); transform-origin: 100% 100%; }
+        
+        .loading-msg {
+            margin-top: 30px; font-family: 'Parisienne', cursive; font-size: 1.8rem;
+            color: var(--deep-rose);
+        }
+
+        /* --- 2. FLOATING BACKGROUND HEARTS --- */
+        .bg-hearts {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 1; overflow: hidden;
+        }
+        .bg-heart {
+            position: absolute; bottom: -10vh; color: rgba(212, 93, 121, 0.3);
+            animation: floatUp 10s linear infinite; font-size: 20px;
+        }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(-110vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* --- 3. LOCK SCREEN --- */
         #lockscreen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('bg.jpg'), var(--rose);
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('bg.jpg'), var(--deep-rose);
             background-size: cover; background-position: center;
             z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: white; text-align: center; transition: 0.8s;
+            color: white; transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
+            text-align: center; padding: 20px;
         }
-        .unlocked { transform: translateY(-100%); }
-        .timer { display: flex; gap: 10px; margin: 20px 0; }
-        .unit { background: rgba(255,255,255,0.2); padding: 10px; border-radius: 10px; min-width: 60px; }
-        .btn-enter { padding: 15px 40px; background: white; color: var(--rose); border: none; border-radius: 50px; font-weight: bold; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        #lockscreen.unlocked { transform: translateY(-100%); }
+        
+        .timer-box { display: flex; gap: 15px; margin: 30px 0; }
+        .time-unit { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 15px; border-radius: 12px; min-width: 75px; text-align: center; }
+        .time-unit span { font-size: 2.2rem; font-family: 'Cormorant Garamond', serif; display: block; font-weight: bold; }
 
-        #main-site { display: none; padding: 20px; }
-        .card { background: white; border-radius: 20px; padding: 25px; margin-bottom: 20px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        h1 { font-family: 'Parisienne', cursive; font-size: 3rem; color: var(--rose); }
+        .btn-enter {
+            padding: 18px 50px; background: white; color: var(--deep-rose);
+            border: none; border-radius: 50px; font-size: 1.2rem; font-weight: bold;
+            cursor: pointer; box-shadow: 0 0 30px rgba(255,255,255,0.4);
+            text-transform: uppercase; letter-spacing: 2px;
+        }
 
-        .gallery { display: flex; gap: 15px; overflow-x: auto; padding: 20px 0; -webkit-overflow-scrolling: touch; }
-        .polaroid { flex: 0 0 240px; background: white; padding: 10px 10px 30px 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); text-align: center; }
-        .polaroid img { width: 100%; height: 240px; object-fit: cover; background: #ffe3e3; display: block; }
-        .polaroid p { font-family: 'Parisienne', cursive; margin-top: 10px; font-size: 1.2rem; }
+        /* --- 4. MAIN SITE LAYOUT --- */
+        #main-site { height: 100vh; overflow-y: scroll; display: none; position: relative; z-index: 2; }
+        .container { max-width: 650px; margin: 0 auto; padding: 40px 15px 120px 15px; }
 
-        .game-box { position: relative; height: 300px; border: 2px dashed var(--rose); border-radius: 15px; overflow: hidden; margin-top: 10px; }
-        .btn-game { padding: 12px 30px; border-radius: 50px; border: none; position: absolute; cursor: pointer; font-weight: bold; }
-        .yes { background: var(--rose); color: white; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 10; }
-        .no { background: #eee; color: #555; left: 50%; top: 20%; transform: translateX(-50%); transition: 0.1s; }
+        section {
+            background: var(--glass); border: 1px solid white; border-radius: 30px;
+            padding: 40px 20px; margin-bottom: 40px; text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+        }
 
-        #success { position: fixed; top:0; left:0; width:100%; height:100%; background:white; z-index:20000; display:none; flex-direction:column; align-items:center; justify-content:center; }
+        h1 { font-family: 'Parisienne', cursive; font-size: 4rem; color: var(--deep-rose); margin-bottom: 10px; }
+        h2 { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-style: italic; margin-bottom: 20px; }
+
+        /* --- 5. THE 8-PHOTO FILM STRIP --- */
+        .gallery-container {
+            width: 100vw; margin-left: calc(-50vw + 50%);
+            overflow-x: auto; display: flex; gap: 20px; padding: 20px 40px 50px 40px;
+            -webkit-overflow-scrolling: touch; 
+        }
+        .gallery-container::-webkit-scrollbar { display: none; }
+
+        .polaroid {
+            flex: 0 0 260px; background: white; padding: 12px 12px 45px 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 2px;
+            transform: rotate(-2deg); transition: 0.3s;
+        }
+        .polaroid:nth-child(even) { transform: rotate(3deg); }
+        .polaroid img { width: 100%; height: 280px; object-fit: cover; background: #ffe3e3; }
+        .polaroid span { display: block; margin-top: 15px; font-family: 'Parisienne', cursive; font-size: 1.5rem; color: #444; }
+
+        /* --- 6. REASONS I LOVE YOU (Flip Cards) --- */
+        .reasons-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 20px; }
+        .reason-card { background: white; height: 120px; border-radius: 15px; cursor: pointer; perspective: 1000px; }
+        .reason-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; }
+        .reason-card.flipped .reason-inner { transform: rotateY(180deg); }
+        .reason-front, .reason-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; display: flex; align-items: center; justify-content: center; border-radius: 15px; padding: 10px; }
+        .reason-front { font-size: 2rem; }
+        .reason-back { transform: rotateY(180deg); background: var(--blush); font-size: 0.85rem; font-weight: 600; color: var(--deep-rose); }
+
+        /* --- 7. THE RUNAWAY GAME --- */
+        .proposal-box {
+            position: relative; height: 350px; width: 100%;
+            background: white; border: 2px dashed var(--rose-gold);
+            border-radius: 25px; margin-top: 20px; overflow: hidden;
+        }
+        .btn-game {
+            padding: 16px 45px; border-radius: 50px; border: none;
+            font-family: 'Montserrat', sans-serif; font-weight: bold; cursor: pointer;
+            position: absolute; transition: 0.15s ease-out; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .btn-yes { background: var(--deep-rose); color: white; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 10; }
+        .btn-no { background: white; color: var(--deep-rose); border: 1px solid var(--deep-rose); left: 50%; top: 20%; transform: translateX(-50%); }
+
+        /* --- 8. SUCCESS OVERLAY --- */
+        #success-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.96); z-index: 20000;
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 20px;
+        }
+        #success-overlay h1 { font-size: 4rem; color: var(--deep-rose); font-family: 'Parisienne', cursive; }
+
+        /* --- 9. TYPING LETTER --- */
+        .letter-content {
+            font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-style: italic;
+            line-height: 1.7; text-align: left; padding: 20px; display: none;
+        }
+
+        @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
     </style>
 </head>
 <body>
 
-    <audio id="music" loop><source src="https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792cb.mp3" type="audio/mp3"></audio>
+    <audio id="bgMusic" preload="auto" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792cb.mp3" type="audio/mp3">
+    </audio>
 
+    <!-- 1. PRE-LOADER -->
+    <div id="loader">
+        <div class="heart-loader"></div>
+        <div class="loading-msg">Loading Love...</div>
+    </div>
+
+    <!-- Background Hearts -->
+    <div class="bg-hearts" id="heartsContainer"></div>
+
+    <!-- 2. LOCK SCREEN -->
     <div id="lockscreen">
-        <h1 style="color: white; font-family: 'Parisienne'; font-size: 3.5rem;">For You ❤️</h1>
-        <div class="timer">
-            <div class="unit"><span id="h">00</span>h</div>
-            <div class="unit"><span id="m">00</span>m</div>
-            <div class="unit"><span id="s">00</span>s</div>
+        <h1 style="color: white; font-size: 3rem;">Valentine 2026</h1>
+        <div class="timer-box">
+            <div class="time-unit"><span id="hrs">00</span>Hrs</div>
+            <div class="unit"><span id="min">00</span>Min</div>
+            <div class="unit"><span id="sec">00</span>Sec</div>
         </div>
-        <button class="btn-enter" onclick="start()">Tap to Enter ❤️</button>
+        <button class="btn-enter" onclick="unlock()">Tap to Enter ❤️</button>
     </div>
 
+    <!-- 3. MAIN SITE -->
     <div id="main-site">
-        <div class="card">
-            <h1>Happy Valentine's!</h1>
-            <p>I made this special world just for you. Take a walk through our memories below...</p>
-        </div>
+        <div class="container">
+            
+            <section>
+                <h1>Hi Beautiful,</h1>
+                <p>I built this little corner of the world just for you. Take a walk through our journey together.</p>
+            </section>
 
-        <div class="gallery">
-            <div class="polaroid"><img src="1.jpg" onerror="this.src='https://via.placeholder.com/240x240/ffc0cb/ffffff?text=❤️'"><p>Moment 1</p></div>
-            <div class="polaroid"><img src="2.jpg" onerror="this.src='https://via.placeholder.com/240x240/ffc0cb/ffffff?text=❤️'"><p>Moment 2</p></div>
-            <div class="polaroid"><img src="3.jpg" onerror="this.src='https://via.placeholder.com/240x240/ffc0cb/ffffff?text=❤️'"><p>Moment 3</p></div>
-            <div class="polaroid"><img src="4.jpg" onerror="this.src='https://via.placeholder.com/240x240/ffc0cb/ffffff?text=❤️'"><p>Moment 4</p></div>
-            <div class="polaroid"><img src="5.jpg" onerror="this.src='https://via.placeholder.com/240x240/ffc0cb/ffffff?text=❤️'"><p>Moment 5</p></div>
-            <div class="polaroid"><img src="6.jpg" onerror="this.src='https://via.placeholder.com/240x240/ffc0cb/ffffff?text=❤️'"><p>Moment 6</p></div>
-            <div class="polaroid"><img src="7.jpg" onerror="this.src='https://via.placeholder.com/240x240/ffc0cb/ffffff?text=❤️'"><p>Moment 7</p></div>
-            <div class="polaroid"><img src="8.jpg" onerror="this.src='https://via.placeholder.com/240x240/ffc0cb/ffffff?text=❤️'"><p>Moment 8</p></div>
-        </div>
-
-        <div class="card">
-            <h2>Will You Be My Valentine?</h2>
-            <div class="game-box" id="area">
-                <button class="btn-game yes" onclick="win()">YES!</button>
-                <button class="btn-game no" id="no">No</button>
+            <!-- 8 PHOTO GALLERY -->
+            <h2 style="text-align: center; margin-bottom: 0;">Our Journey</h2>
+            <div class="gallery-container">
+                <div class="polaroid"><img src="1.jpg" onerror="this.src='https://via.placeholder.com/260x280/ffc0cb/ffffff?text=❤️'"><span>The First Day</span></div>
+                <div class="polaroid"><img src="2.jpg" onerror="this.src='https://via.placeholder.com/260x280/ffc0cb/ffffff?text=❤️'"><span>First Laugh</span></div>
+                <div class="polaroid"><img src="3.jpg" onerror="this.src='https://via.placeholder.com/260x280/ffc0cb/ffffff?text=❤️'"><span>Favorite Date</span></div>
+                <div class="polaroid"><img src="4.jpg" onerror="this.src='https://via.placeholder.com/260x280/ffc0cb/ffffff?text=❤️'"><span>Summer Vibes</span></div>
+                <div class="polaroid"><img src="5.jpg" onerror="this.src='https://via.placeholder.com/260x280/ffc0cb/ffffff?text=❤️'"><span>Adventures</span></div>
+                <div class="polaroid"><img src="6.jpg" onerror="this.src='https://via.placeholder.com/260x280/ffc0cb/ffffff?text=❤️'"><span>Cozy Nights</span></div>
+                <div class="polaroid"><img src="7.jpg" onerror="this.src='https://via.placeholder.com/260x280/ffc0cb/ffffff?text=❤️'"><span>Sweet Dreams</span></div>
+                <div class="polaroid"><img src="8.jpg" onerror="this.src='https://via.placeholder.com/260x280/ffc0cb/ffffff?text=❤️'"><span>Forever Us</span></div>
             </div>
+
+            <!-- REASONS SECTION -->
+            <section>
+                <h2>Reasons I Love You</h2>
+                <div class="reasons-grid">
+                    <div class="reason-card" onclick="this.classList.toggle('flipped')"><div class="reason-inner"><div class="reason-front">✨</div><div class="reason-back">The way your eyes light up when you're happy.</div></div></div>
+                    <div class="reason-card" onclick="this.classList.toggle('flipped')"><div class="reason-inner"><div class="reason-front">🏠</div><div class="reason-back">How you make me feel at home no matter where we are.</div></div></div>
+                    <div class="reason-card" onclick="this.classList.toggle('flipped')"><div class="reason-inner"><div class="reason-front">😂</div><div class="reason-back">How we can laugh at literally nothing for hours.</div></div></div>
+                    <div class="reason-card" onclick="this.classList.toggle('flipped')"><div class="reason-inner"><div class="reason-front">❤️</div><div class="reason-back">Simply because you are exactly who you are.</div></div></div>
+                </div>
+            </section>
+
+            <!-- PROPOSAL GAME -->
+            <section>
+                <h2>The Big Question</h2>
+                <p>Will you make me the luckiest and be my Valentine?</p>
+                <div class="proposal-box" id="gameArea">
+                    <button class="btn-game btn-yes" onclick="celebrate()">YES! ❤️</button>
+                    <button class="btn-game btn-no" id="noBtn">No</button>
+                </div>
+            </section>
+
+            <!-- FINAL LETTER -->
+            <section>
+                <h2>A Love Letter</h2>
+                <button class="btn-game" id="letterBtn" style="position:relative; transform:none; left:0;" onclick="revealLetter()">Open Letter 💌</button>
+                <div class="letter-content" id="letterText">
+                    My Dearest,<br><br>
+                    Thank you for filling my life with so much light and love. Every second with you is a gift I cherish. You are my today and all of my tomorrows.<br><br>
+                    Happy Valentine's Day! ❤️
+                </div>
+            </section>
+
+            <footer style="text-align: center; opacity: 0.6; font-size: 0.9rem;">
+                ❤️ 2026 Forever Yours
+            </footer>
         </div>
     </div>
 
-    <div id="success">
-        <h1 style="color:var(--rose); font-family: 'Parisienne'; font-size: 4rem;">YAY! ❤️</h1>
-        <p>You've made me the luckiest person!</p>
-        <button onclick="location.reload()" style="margin-top:20px; padding: 10px 20px; border-radius: 20px; border: none; background: var(--rose); color: white;">Back</button>
+    <!-- SUCCESS OVERLAY -->
+    <div id="success-overlay">
+        <canvas id="confetti"></canvas>
+        <h1>YAY! 🎉</h1>
+        <h2>I'm the luckiest person alive! ❤️</h2>
+        <button onclick="document.getElementById('success-overlay').style.display='none'" style="margin-top:30px; padding:15px 30px; border-radius:30px; border:none; background:var(--deep-rose); color:white; font-weight:bold;">Back</button>
     </div>
 
     <script>
-        function start() {
-            document.getElementById('music').play().catch(()=>{});
-            document.getElementById('lockscreen').classList.add('unlocked');
-            document.getElementById('main-site').style.display = 'block';
-        }
+        // --- 1. PRE-LOADER ---
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                const loader = document.getElementById('loader');
+                loader.style.opacity = '0';
+                setTimeout(() => { loader.style.display = 'none'; }, 800);
+            }, 2000);
+        });
 
+        // --- 2. FLOATING HEARTS ---
+        function createHeart() {
+            const container = document.getElementById('heartsContainer');
+            const heart = document.createElement('div');
+            heart.classList.add('bg-heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 5 + 5 + 's';
+            heart.style.fontSize = Math.random() * 15 + 10 + 'px';
+            container.appendChild(heart);
+            setTimeout(() => heart.remove(), 10000);
+        }
+        setInterval(createHeart, 500);
+
+        // --- 3. TIMER ---
         const target = new Date("February 14, 2026 00:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
             const diff = target - now;
             if (diff > 0) {
-                document.getElementById('h').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                document.getElementById('m').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                document.getElementById('s').innerText = Math.floor((diff % (1000 * 60)) / 1000);
-            } else {
-                document.getElementById('h').innerText = "00";
-                document.getElementById('m').innerText = "00";
-                document.getElementById('s').innerText = "00";
+                document.getElementById('hrs').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('min').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('sec').innerText = Math.floor((diff % (1000 * 60)) / 1000);
             }
         }, 1000);
 
-        const no = document.getElementById('no');
-        const area = document.getElementById('area');
-        function move(e) {
-            if(e) e.preventDefault();
-            const a = area.getBoundingClientRect();
-            const b = no.getBoundingClientRect();
-            no.style.left = Math.random() * (a.width - b.width) + 'px';
-            no.style.top = Math.random() * (a.height - b.height) + 'px';
+        // --- 4. UNLOCK ---
+        function unlock() {
+            document.getElementById('bgMusic').play().catch(()=>{});
+            document.getElementById('lockscreen').classList.add('unlocked');
+            setTimeout(() => {
+                document.getElementById('main-site').style.display = 'block';
+                document.body.style.overflowY = 'auto';
+            }, 800);
         }
-        no.addEventListener('touchstart', move);
-        no.addEventListener('mouseover', move);
-        function win() { document.getElementById('success').style.display='flex'; }
-    </script>
-</body>
-</html>                document.getElementById('s').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+
+        // --- 5. RUNAWAY NO ---
+        const noBtn = document.getElementById('noBtn');
+        const gameArea = document.getElementById('gameArea');
+        function moveBtn(e) {
+            if(e) e.preventDefault();
+            const area = gameArea.getBoundingClientRect();
+            const btn = noBtn.getBoundingClientRect();
+            noBtn.style.left = Math.random() * (area.width - btn.width - 20) + 'px';
+            noBtn.style.top = Math.random() * (area.height - btn.height - 20) + 'px';
+            noBtn.style.transform = 'none';
+        }
+        noBtn.addEventListener('mouseover', moveBtn);
+        noBtn.addEventListener('touchstart', moveBtn);
+
+        // --- 6. CELEBRATE & CONFETTI ---
+        function celebrate() {
+            document.getElementById('success-overlay').style.display = 'flex';
+            const canvas = document.getElementById('confetti');
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            const pieces = [];
+            for(let i=0; i<150; i++) {
+                pieces.push({x:Math.random()*canvas.width, y:Math.random()*canvas.height - canvas.height, s:Math.random()*8+4, c:`hsl(${Math.random()*360}, 100%, 70%)`, v:Math.random()*3+2, t:Math.random()*10});
             }
-        }, 1000);
-
-        const no = document.getElementById('no');
-        const area = document.getElementById('area');
-        function move(e) {
-            if(e) e.preventDefault();
-            const a = area.getBoundingClientRect();
-            const b = no.getBoundingClientRect();
-            no.style.left = Math.random() * (a.width - b.width) + 'px';
-            no.style.top = Math.random() * (a.height - b.height) + 'px';
+            function anim() {
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                pieces.forEach(p => {
+                    p.y += p.v; p.t += 0.1;
+                    ctx.fillStyle = p.c;
+                    ctx.fillRect(p.x + Math.sin(p.t)*5, p.y, p.s, p.s);
+                    if(p.y > canvas.height) p.y = -10;
+                });
+                if(document.getElementById('success-overlay').style.display==='flex') requestAnimationFrame(anim);
+            }
+            anim();
         }
-        no.addEventListener('touchstart', move);
-        no.addEventListener('mouseover', move);
 
-        function win() { document.getElementById('success').style.display='flex'; }
+        // --- 7. REVEAL LETTER ---
+        function revealLetter() {
+            document.getElementById('letterBtn').style.display = 'none';
+            document.getElementById('letterText').style.display = 'block';
+        }
     </script>
 </body>
 </html>
