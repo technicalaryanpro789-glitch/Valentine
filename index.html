@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>For My Forever Valentine ❤️</title>
+    <!-- Romantic Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rose-gold: #e5b3a3;
+            --deep-rose: #d45d79;
+            --cream: #fffaf0;
+            --glass: rgba(255, 255, 255, 0.88);
+            --text: #5e2c3a;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ffe3e3 100%);
+            color: var(--text);
+            overflow: hidden; /* Locked until enter */
+            height: 100vh;
+        }
+
+        /* --- 1. LUXURY PRE-LOADER --- */
+        #loader {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--cream); z-index: 99999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .heart-loader {
+            width: 80px; height: 70px; position: relative;
+            animation: beat 1.2s infinite;
+        }
+        .heart-loader:before, .heart-loader:after {
+            content: ""; position: absolute; top: 0; width: 40px; height: 65px;
+            border-radius: 40px 40px 0 0; background: var(--deep-rose);
+        }
+        .heart-loader:before { left: 40px; transform: rotate(-45deg); transform-origin: 0 100%; }
+        .heart-loader:after { left: 0; transform: rotate(45deg); transform-origin: 100% 100%; }
+        
+        .loading-msg {
+            margin-top: 30px; font-family: 'Parisienne', cursive; font-size: 1.5rem;
+            color: var(--deep-rose);
+        }
+
+        /* --- 2. LOCK SCREEN --- */
+        #lockscreen {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('images/bg.jpg');
+            background-size: cover; background-position: center;
+            z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            color: white; transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
+            text-align: center; padding: 20px;
+        }
+        #lockscreen.unlocked { transform: translateY(-100%); }
+        
+        .timer-box { display: flex; gap: 10px; margin: 25px 0; }
+        .unit { 
+            background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); 
+            padding: 12px; border-radius: 12px; min-width: 65px; 
+        }
+        .unit span { font-size: 1.8rem; font-family: 'Cormorant Garamond', serif; display: block; font-weight: bold; }
+
+        .btn-enter {
+            padding: 16px 45px; background: white; color: var(--deep-rose);
+            border: none; border-radius: 50px; font-size: 1.1rem; font-weight: bold;
+            cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            text-transform: uppercase; letter-spacing: 2px; transition: 0.3s;
+        }
+        .btn-enter:active { transform: scale(0.95); }
+
+        /* --- 3. MAIN SITE --- */
+        #main-site { height: 100vh; overflow-y: auto; display: none; }
+        .container { max-width: 600px; margin: 0 auto; padding: 40px 15px 100px 15px; }
+
+        section {
+            background: var(--glass); border: 1px solid white; border-radius: 30px;
+            padding: 40px 20px; margin-bottom: 40px; text-align: center;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+        }
+
+        h1 { font-family: 'Parisienne', cursive; font-size: 3.5rem; color: var(--deep-rose); margin-bottom: 10px; }
+        h2 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-style: italic; margin-bottom: 20px; color: var(--text); }
+
+        /* --- 4. THE 8-PHOTO GALLERY (Fixed Smooth Scroll) --- */
+        .gallery-wrapper {
+            width: 100vw; margin-left: calc(-50vw + 50%);
+            overflow-x: auto; display: flex; gap: 20px; padding: 20px 30px 50px 30px;
+            -webkit-overflow-scrolling: touch; 
+        }
+        .gallery-wrapper::-webkit-scrollbar { display: none; }
+
+        .polaroid {
+            flex: 0 0 260px; background: white; padding: 12px 12px 45px 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 2px;
+            transform: rotate(-2deg); transition: 0.3s;
+        }
+        .polaroid:nth-child(even) { transform: rotate(3deg); }
+        .polaroid img { width: 100%; height: 280px; object-fit: cover; background: #eee; }
+        .polaroid span { display: block; margin-top: 15px; font-family: 'Parisienne', cursive; font-size: 1.5rem; color: #444; }
+
+        /* --- 5. THE RUNAWAY GAME --- */
+        .game-box {
+            position: relative; height: 350px; width: 100%;
+            background: white; border: 2px dashed var(--rose-gold);
+            border-radius: 25px; margin-top: 20px; overflow: hidden;
+        }
+        .btn-game {
+            padding: 15px 40px; border-radius: 50px; border: none;
+            font-family: 'Montserrat', sans-serif; font-weight: 700; cursor: pointer;
+            position: absolute; transition: 0.1s ease-out; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .btn-yes { background: var(--deep-rose); color: white; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 10; }
+        .btn-no { background: white; color: var(--deep-rose); border: 1px solid var(--deep-rose); left: 50%; top: 20%; transform: translateX(-50%); }
+
+        /* --- 6. SUCCESS OVERLAY --- */
+        #success-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(255, 255, 255, 0.96); z-index: 20000;
+            display: none; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 20px;
+        }
+        #success-overlay h1 { font-size: 4rem; }
+        .btn-close { 
+            margin-top: 30px; background: var(--deep-rose); color: white; 
+            padding: 15px 35px; border-radius: 50px; border: none; font-weight: bold;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
+    </style>
+</head>
+<body>
+
+    <!-- AUDIO SOURCE (Same Song) -->
+    <audio id="bgMusic" preload="auto" loop>
+        <source src="https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792cb.mp3" type="audio/mp3">
+    </audio>
+
+    <!-- 1. PRE-LOADER -->
+    <div id="loader">
+        <div class="heart-loader"></div>
+        <div class="loading-msg">Loading a lovely surprise...</div>
+    </div>
+
+    <!-- 2. LOCK SCREEN -->
+    <div id="lockscreen">
+        <h1 style="color: white; font-size: 2.5rem;">For You ❤️</h1>
+        <p style="margin-top: 10px; font-weight: 300;">Unlocking in:</p>
+        <div class="timer-box">
+            <div class="unit"><span id="hrs">00</span>Hrs</div>
+            <div class="unit"><span id="min">00</span>Min</div>
+            <div class="unit"><span id="sec">00</span>Sec</div>
+        </div>
+        <button class="btn-enter" onclick="unlock()">Tap to Enter ❤️</button>
+    </div>
+
+    <!-- 3. MAIN SITE -->
+    <div id="main-site">
+        <div class="container">
+            
+            <section>
+                <h1>Hi Beautiful,</h1>
+                <p>Since you are my favorite person, I made this special corner of the internet just for you. Take a look...</p>
+            </section>
+
+            <!-- 8 PHOTO FILM STRIP -->
+            <h2 style="text-align: center; margin-bottom: 0;">Our Sweetest Moments</h2>
+            <div class="gallery-wrapper">
+                <div class="polaroid"><img src="images/1.jpg"><span>The Beginning</span></div>
+                <div class="polaroid"><img src="images/2.jpg"><span>First Date</span></div>
+                <div class="polaroid"><img src="images/3.jpg"><span>Your Smile</span></div>
+                <div class="polaroid"><img src="images/4.jpg"><span>Us</span></div>
+                <div class="polaroid"><img src="images/5.jpg"><span>Adventures</span></div>
+                <div class="polaroid"><img src="images/6.jpg"><span>Laughs</span></div>
+                <div class="polaroid"><img src="images/7.jpg"><span>Happiness</span></div>
+                <div class="polaroid"><img src="images/8.jpg"><span>Forever</span></div>
+            </div>
+
+            <section>
+                <h2>One Big Question...</h2>
+                <p>Will you be my Valentine?</p>
+                <div class="game-box" id="gameArea">
+                    <button class="btn-game btn-yes" onclick="celebrate()">YES! ❤️</button>
+                    <button class="btn-game btn-no" id="noBtn">No</button>
+                </div>
+            </section>
+
+            <section>
+                <h2>A Secret Letter</h2>
+                <div id="letterBody" style="display: none; text-align: left; font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-style: italic; line-height: 1.7;">
+                    My Dearest,<br><br>
+                    You are the best thing that ever happened to me. Every day feels like a dream with you by my side. Thank you for your love, your kindness, and your magic.<br><br>
+                    Happy Valentine's Day! ❤️
+                </div>
+                <button class="btn-game" id="openBtn" style="position:relative; transform:none; left:0;" onclick="showLetter()">Open Envelope 💌</button>
+            </section>
+
+            <footer style="text-align: center; opacity: 0.5; margin-top: 40px; font-size: 0.8rem;">
+                © 2026 Made with Love
+            </footer>
+        </div>
+    </div>
+
+    <!-- SUCCESS OVERLAY -->
+    <div id="success-overlay">
+        <canvas id="confetti"></canvas>
+        <h1>YAY! 🎉</h1>
+        <h2>I'm the luckiest! ❤️</h2>
+        <button class="btn-close" onclick="closeSuccess()">Read Letter 👇</button>
+    </div>
+
+    <script>
+        // --- PRE-LOADER ---
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => { document.getElementById('loader').style.display = 'none'; }, 600);
+            }, 2000);
+        });
+
+        // --- TIMER ---
+        const target = new Date("February 14, 2026 00:00:00").getTime();
+        function updateTimer() {
+            const now = new Date().getTime();
+            const diff = target - now;
+            if (diff > 0) {
+                document.getElementById('hrs').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('min').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('sec').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+            } else {
+                document.getElementById('hrs').innerText = "00";
+                document.getElementById('min').innerText = "00";
+                document.getElementById('sec').innerText = "00";
+            }
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // --- UNLOCK ---
+        function unlock() {
+            const music = document.getElementById('bgMusic');
+            music.play().catch(() => console.log("Audio needs user interaction first."));
+            document.getElementById('lockscreen').classList.add('unlocked');
+            setTimeout(() => {
+                document.getElementById('main-site').style.display = 'block';
+                document.body.style.overflowY = 'auto';
+            }, 800);
+        }
+
+        // --- RUNAWAY NO ---
+        const noBtn = document.getElementById('noBtn');
+        const gameArea = document.getElementById('gameArea');
+        function moveBtn(e) {
+            if(e) e.preventDefault();
+            const box = gameArea.getBoundingClientRect();
+            const btn = noBtn.getBoundingClientRect();
+            const maxX = box.width - btn.width - 20;
+            const maxY = box.height - btn.height - 20;
+            noBtn.style.left = Math.random() * maxX + 'px';
+            noBtn.style.top = Math.random() * maxY + 'px';
+            noBtn.style.transform = 'none';
+        }
+        noBtn.addEventListener('mouseover', moveBtn);
+        noBtn.addEventListener('touchstart', moveBtn);
+
+        // --- SUCCESS & CONFETTI ---
+        function celebrate() {
+            document.getElementById('success-overlay').style.display = 'flex';
+            startConfetti();
+        }
+        function closeSuccess() { document.getElementById('success-overlay').style.display = 'none'; }
+
+        function showLetter() {
+            document.getElementById('openBtn').style.display = 'none';
+            document.getElementById('letterBody').style.display = 'block';
+        }
+
+        // Confetti Logic
+        const canvas = document.getElementById('confetti');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const pieces = [];
+        function startConfetti() {
+            for(let i=0; i<150; i++) {
+                pieces.push({
+                    x: Math.random()*canvas.width, y: Math.random()*canvas.height - canvas.height,
+                    s: Math.random()*8+4, c: `hsl(${Math.random()*360}, 100%, 70%)`,
+                    v: Math.random()*3+2, t: Math.random()*10
+                });
+            }
+            (function anim() {
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                pieces.forEach(p => {
+                    p.y += p.v; p.t += 0.1;
+                    ctx.fillStyle = p.c;
+                    ctx.fillRect(p.x + Math.sin(p.t)*5, p.y, p.s, p.s);
+                    if(p.y > canvas.height) p.y = -10;
+                });
+                if(document.getElementById('success-overlay').style.display==='flex') requestAnimationFrame(anim);
+            })();
+        }
+    </script>
+</body>
+</html>
