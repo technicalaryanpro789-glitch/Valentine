@@ -4,127 +4,124 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>For My Forever Valentine ❤️</title>
-    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Cormorant+Garamond:ital,wght@0,600;1,600&family=Montserrat:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Parisienne&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --rose-gold: #e5b3a3;
             --deep-rose: #d45d79;
             --cream: #fffaf0;
-            --glass: rgba(255, 255, 255, 0.88);
-            --text: #5e2c3a;
+            --glass: rgba(255, 255, 255, 0.9);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #fdfbfb 0%, #ffe3e3 100%);
-            color: var(--text);
+            background: #ffe3e3;
+            color: #5e2c3a;
             overflow: hidden;
             height: 100vh;
         }
 
+        /* --- PRE-LOADER --- */
         #loader {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--cream); z-index: 99999;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
+            transition: 0.5s;
         }
         .heart-loader {
             width: 80px; height: 70px; position: relative;
-            animation: beat 1.2s infinite;
+            animation: beat 1.2s infinite; background: var(--deep-rose);
+            clip-path: path('M40 70 C40 70 0 45 0 20 C0 0 35 0 40 20 C45 0 80 0 80 20 C80 45 40 70 40 70 Z');
         }
-        .heart-loader:before, .heart-loader:after {
-            content: ""; position: absolute; top: 0; width: 40px; height: 65px;
-            border-radius: 40px 40px 0 0; background: var(--deep-rose);
-        }
-        .heart-loader:before { left: 40px; transform: rotate(-45deg); transform-origin: 0 100%; }
-        .heart-loader:after { left: 0; transform: rotate(45deg); transform-origin: 100% 100%; }
-        
-        .loading-msg { margin-top: 30px; font-family: 'Parisienne', cursive; font-size: 1.5rem; color: var(--deep-rose); }
+        @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
 
+        /* --- LOCK SCREEN --- */
         #lockscreen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('bg.jpg');
+            /* Fallback to Pink if bg.jpg is missing */
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url('bg.jpg'), #ff8fa3;
             background-size: cover; background-position: center;
             z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            color: white; transition: transform 0.8s cubic-bezier(0.86, 0, 0.07, 1);
-            text-align: center; padding: 20px;
+            color: white; transition: 0.8s; text-align: center;
         }
         #lockscreen.unlocked { transform: translateY(-100%); }
         
         .timer-box { display: flex; gap: 10px; margin: 25px 0; }
         .unit { background: rgba(255,255,255,0.2); backdrop-filter: blur(10px); padding: 12px; border-radius: 12px; min-width: 65px; }
-        .unit span { font-size: 1.8rem; font-family: 'Cormorant Garamond', serif; display: block; font-weight: bold; }
+        .unit span { font-size: 1.8rem; display: block; font-weight: bold; }
 
         .btn-enter {
             padding: 16px 45px; background: white; color: var(--deep-rose);
             border: none; border-radius: 50px; font-size: 1.1rem; font-weight: bold;
             cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            text-transform: uppercase; letter-spacing: 2px;
         }
 
+        /* --- MAIN SITE --- */
         #main-site { height: 100vh; overflow-y: auto; display: none; }
         .container { max-width: 600px; margin: 0 auto; padding: 40px 15px 100px 15px; }
 
         section {
-            background: var(--glass); border: 1px solid white; border-radius: 30px;
-            padding: 40px 20px; margin-bottom: 40px; text-align: center;
+            background: var(--glass); border-radius: 30px;
+            padding: 30px 20px; margin-bottom: 30px; text-align: center;
             box-shadow: 0 15px 35px rgba(0,0,0,0.05);
         }
 
-        h1 { font-family: 'Parisienne', cursive; font-size: 3.5rem; color: var(--deep-rose); }
+        h1 { font-family: 'Parisienne', cursive; font-size: 3rem; color: var(--deep-rose); }
 
+        /* --- GALLERY --- */
         .gallery-wrapper {
-            width: 100vw; margin-left: calc(-50vw + 50%);
-            overflow-x: auto; display: flex; gap: 20px; padding: 20px 30px 50px 30px;
-            -webkit-overflow-scrolling: touch; 
+            display: flex; gap: 20px; overflow-x: auto; 
+            padding: 20px; margin: 0 -15px;
         }
         .gallery-wrapper::-webkit-scrollbar { display: none; }
 
         .polaroid {
-            flex: 0 0 260px; background: white; padding: 12px 12px 45px 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1); border-radius: 2px;
-            transform: rotate(-2deg);
+            flex: 0 0 250px; background: white; padding: 10px 10px 40px 10px;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1); transform: rotate(-2deg);
         }
-        .polaroid img { width: 100%; height: 280px; object-fit: cover; background: #eee; }
-        .polaroid span { display: block; margin-top: 15px; font-family: 'Parisienne', cursive; font-size: 1.5rem; }
+        .polaroid:nth-child(even) { transform: rotate(2deg); }
+        .polaroid img { 
+            width: 100%; height: 250px; object-fit: cover; 
+            background: #ffd1d1; /* This shows if image fails to load */
+        }
+        .polaroid span { display: block; margin-top: 10px; font-family: 'Parisienne', cursive; font-size: 1.5rem; }
 
+        /* --- BUTTON GAME --- */
         .game-box {
-            position: relative; height: 350px; width: 100%;
+            position: relative; height: 300px; width: 100%;
             background: white; border: 2px dashed var(--rose-gold);
             border-radius: 25px; margin-top: 20px; overflow: hidden;
         }
         .btn-game {
-            padding: 15px 40px; border-radius: 50px; border: none;
-            font-family: 'Montserrat', sans-serif; font-weight: 700; cursor: pointer;
-            position: absolute; transition: 0.1s ease-out; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            padding: 15px 35px; border-radius: 50px; border: none;
+            font-weight: 700; cursor: pointer;
+            position: absolute; transition: 0.1s;
         }
-        .btn-yes { background: var(--deep-rose); color: white; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 10; }
+        .btn-yes { background: var(--deep-rose); color: white; left: 50%; top: 50%; transform: translate(-50%, -50%); }
         .btn-no { background: white; color: var(--deep-rose); border: 1px solid var(--deep-rose); left: 50%; top: 20%; transform: translateX(-50%); }
 
-        #success-overlay {
+        #success {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(255, 255, 255, 0.96); z-index: 20000;
+            background: white; z-index: 20000;
             display: none; flex-direction: column; align-items: center; justify-content: center;
-            text-align: center; padding: 20px;
         }
-        @keyframes beat { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
-        canvas { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; }
     </style>
 </head>
 <body>
 
-    <audio id="bgMusic" preload="auto" loop>
+    <audio id="bgMusic" loop>
         <source src="https://cdn.pixabay.com/download/audio/2022/10/14/audio_9939f792cb.mp3" type="audio/mp3">
     </audio>
 
     <div id="loader">
         <div class="heart-loader"></div>
-        <div class="loading-msg">Loading a lovely surprise...</div>
+        <p style="margin-top:20px; font-family:'Parisienne'">Loading Love...</p>
     </div>
 
     <div id="lockscreen">
-        <h1 style="color: white; font-size: 2.5rem;">For You ❤️</h1>
+        <h1 style="color: white;">For You ❤️</h1>
         <div class="timer-box">
             <div class="unit"><span id="hrs">00</span>Hrs</div>
             <div class="unit"><span id="min">00</span>Min</div>
@@ -137,19 +134,84 @@
         <div class="container">
             <section>
                 <h1>Hi Beautiful,</h1>
-                <p>Since you are my favorite person, I made this special corner of the internet just for you.</p>
+                <p>I made this special place just for you.</p>
             </section>
 
             <div class="gallery-wrapper">
-                <div class="polaroid"><img src="1.jpg"><span>The Beginning</span></div>
-                <div class="polaroid"><img src="2.jpg"><span>First Date</span></div>
-                <div class="polaroid"><img src="3.jpg"><span>Your Smile</span></div>
-                <div class="polaroid"><img src="4.jpg"><span>Us</span></div>
-                <div class="polaroid"><img src="5.jpg"><span>Adventures</span></div>
-                <div class="polaroid"><img src="6.jpg"><span>Laughs</span></div>
-                <div class="polaroid"><img src="7.jpg"><span>Happiness</span></div>
-                <div class="polaroid"><img src="8.jpg"><span>Forever</span></div> <!-- Used 7 again since 8 is missing -->
+                <!-- Check filenames carefully! If they are 1.JPG, change to 1.JPG -->
+                <div class="polaroid"><img src="1.jpg"><span>Moment 1</span></div>
+                <div class="polaroid"><img src="2.jpg"><span>Moment 2</span></div>
+                <div class="polaroid"><img src="3.jpg"><span>Moment 3</span></div>
+                <div class="polaroid"><img src="4.jpg"><span>Moment 4</span></div>
+                <div class="polaroid"><img src="5.jpg"><span>Moment 5</span></div>
+                <div class="polaroid"><img src="6.jpg"><span>Moment 6</span></div>
+                <div class="polaroid"><img src="7.jpg"><span>Moment 7</span></div>
             </div>
+
+            <section>
+                <h2>Will You Be My Valentine?</h2>
+                <div class="game-box" id="gameArea">
+                    <button class="btn-game btn-yes" onclick="celebrate()">YES! ❤️</button>
+                    <button class="btn-game btn-no" id="noBtn">No</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div id="success">
+        <h1 style="font-family:'Parisienne'; font-size:4rem; color:var(--deep-rose)">YAY! 🎉</h1>
+        <h2>I'm the luckiest person! ❤️</h2>
+        <button onclick="location.reload()" style="margin-top:20px; padding:10px 20px; border:none; border-radius:20px; background:var(--rose-gold)">Back</button>
+    </div>
+
+    <script>
+        // Loader
+        window.onload = () => {
+            setTimeout(() => {
+                document.getElementById('loader').style.opacity = '0';
+                setTimeout(() => document.getElementById('loader').style.display = 'none', 500);
+            }, 1500);
+        };
+
+        // Timer
+        const target = new Date("February 14, 2026 00:00:00").getTime();
+        setInterval(() => {
+            const now = new Date().getTime();
+            const diff = target - now;
+            if (diff > 0) {
+                document.getElementById('hrs').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                document.getElementById('min').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                document.getElementById('sec').innerText = Math.floor((diff % (1000 * 60)) / 1000);
+            }
+        }, 1000);
+
+        // Unlock
+        function unlock() {
+            document.getElementById('bgMusic').play().catch(() => {});
+            document.getElementById('lockscreen').classList.add('unlocked');
+            document.getElementById('main-site').style.display = 'block';
+            document.body.style.overflowY = 'auto';
+        }
+
+        // Game
+        const noBtn = document.getElementById('noBtn');
+        const gameArea = document.getElementById('gameArea');
+        function moveBtn(e) {
+            if(e) e.preventDefault();
+            const box = gameArea.getBoundingClientRect();
+            const btn = noBtn.getBoundingClientRect();
+            noBtn.style.left = Math.random() * (box.width - btn.width - 20) + 'px';
+            noBtn.style.top = Math.random() * (box.height - btn.height - 20) + 'px';
+        }
+        noBtn.addEventListener('touchstart', moveBtn);
+        noBtn.addEventListener('mouseover', moveBtn);
+
+        function celebrate() {
+            document.getElementById('success').style.display = 'flex';
+        }
+    </script>
+</body>
+</html>            </div>
 
             <section>
                 <h2>One Big Question...</h2>
